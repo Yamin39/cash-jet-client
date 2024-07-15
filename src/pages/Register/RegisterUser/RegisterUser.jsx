@@ -1,12 +1,15 @@
+import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaPhone, FaRegUserCircle } from "react-icons/fa";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import { MdEmail, MdOutlineKey } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import image from "../../../assets/images/register-user.avif";
 
 const RegisterUser = () => {
+  const navigate = useNavigate();
   // Password Show / Hide Toggle
   const [passToggle, setPassToggle] = useState(false);
 
@@ -14,12 +17,43 @@ const RegisterUser = () => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    const password = form.password.value;
+    const pin = form.pin.value;
     const mobileNumber = form.mobileNumber.value;
     const email = form.email.value;
-    const userData = { name, password, mobileNumber, email, role: "user" };
+    const userData = { name, pin, mobileNumber, email, balance: 0, status: "pending", role: "user" };
+
+    // validation
+    if (isNaN(pin)) {
+      toast.error("Only numbers are allowed for pin");
+      return;
+    }
+
+    if (pin.length !== 5) {
+      toast.error("The PIN length should be equal to 5 characters.");
+      return;
+    }
+
+    if (!/^\+?(\d{1,3})?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(mobileNumber)) {
+      toast.error("Invalid mobile number");
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      toast.error("Invalid email address");
+      return;
+    }
 
     console.log(userData);
+    axios.post("http://localhost:5000/users", userData).then((res) => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        toast.success("Registration Successful");
+        navigate("/");
+        form.reset();
+      } else {
+        toast.error(res.data.message);
+      }
+    });
   };
   return (
     <>
@@ -44,14 +78,14 @@ const RegisterUser = () => {
                 <input type="text" placeholder="Name" name="name" className="bg-transparent w-full text-black outline-none" required />
               </div>
 
-              {/* password */}
+              {/* pin */}
               <div className="mt-4 w-full mx-auto flex justify-between items-center gap-3 text-base border-2 text-[#acacac] border-[#c1c8d0] rounded-full py-3 px-6">
                 <div className="flex gap-3 items-center">
                   <MdOutlineKey className="text-xl" />
                   <input
                     type={passToggle ? "text" : "password"}
-                    placeholder="Password"
-                    name="password"
+                    placeholder="Pin"
+                    name="pin"
                     className="bg-transparent w-full text-black outline-none"
                     required
                   />

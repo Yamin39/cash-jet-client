@@ -27,7 +27,9 @@ const RegisterUser = () => {
         <div className="text-center sm:flex lg:block justify-center items-center">
           <div className="w-fit mx-auto">
             <div className="max-w-[15.625rem] mx-auto mb-3">
-              <img className="w-full" src={logo} alt="logo" />
+              <Link to="/">
+                <img className="w-full" src={logo} alt="logo" />
+              </Link>
             </div>
             <h4 className="text-4xl font-bold">
               <span className="text-primary-color">User</span> Registration
@@ -88,9 +90,9 @@ const RegisterUser = () => {
           </div>
         </div>
         {/* image */}
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <div>
-            <img className="rounded-3xl max-h-[37.5rem]" src={image} alt="House" />
+            <img className="rounded-3xl max-h-[37.5rem]" src={image} alt="image" />
           </div>
         </div>
       </div>

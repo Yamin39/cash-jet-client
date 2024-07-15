@@ -14,14 +14,17 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log({ email, password });
+    const loginData = { email, password };
+    console.log(loginData);
   };
   return (
     <div className="py-8 min-h-screen flex flex-row-reverse justify-around items-center">
       <div className="text-center sm:min-h-[80vh] lg:min-h-0 sm:flex lg:block justify-center items-center">
         <div className="w-fit mx-auto">
           <div className="max-w-[15.625rem] mx-auto mb-3">
-            <img className="w-full" src={logo} alt="logo" />
+            <Link to="/">
+              <img className="w-full" src={logo} alt="logo" />
+            </Link>
           </div>
           <h4 className="text-4xl font-bold">
             Welcome <span className="text-primary-color">Back</span>
@@ -70,9 +73,9 @@ const Login = () => {
         </div>
       </div>
       {/* image */}
-      <div className="hidden lg:block">
+      <div className="hidden md:block">
         <div>
-          <img className="rounded-3xl max-h-[37.5rem]" src={image} alt="House" />
+          <img className="rounded-3xl max-h-[37.5rem]" src={image} alt="image" />
         </div>
       </div>
     </div>

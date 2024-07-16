@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaPhone, FaRegUserCircle } from "react-icons/fa";
@@ -7,8 +6,10 @@ import { MdEmail, MdOutlineKey } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import image from "../../../assets/images/register-user.avif";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const RegisterUser = () => {
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   // Password Show / Hide Toggle
   const [passToggle, setPassToggle] = useState(false);
@@ -44,14 +45,14 @@ const RegisterUser = () => {
     }
 
     console.log(userData);
-    axios.post("http://localhost:5000/users", userData).then((res) => {
+    axiosPublic.post("/users", userData).then((res) => {
       console.log(res.data);
       if (res.data.insertedId) {
-        toast.success("Registration Successful");
+        toast.success("User Registration Successful");
         navigate("/");
         form.reset();
       } else {
-        toast.error(res.data.message);
+        toast.error(res?.data?.message);
       }
     });
   };

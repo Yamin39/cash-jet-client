@@ -6,10 +6,12 @@ import { MdEmail, MdManageAccounts, MdOutlineKey } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import image from "../../../assets/images/register-user.avif";
+import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import "./Register.css";
 
 const Register = () => {
+  const { profileLoader, setProfileLoader } = useAuth();
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   // Password Show / Hide Toggle
@@ -46,14 +48,17 @@ const Register = () => {
       return;
     }
 
-    // console.log(userData);
     axiosPublic.post("/users", userData).then((res) => {
       console.log(res.data);
       if (res.data.result?.insertedId) {
         toast.success("Registration Successful");
         localStorage.setItem("token", res.data.token);
+
+        // setTimeout(() => {
         form.reset();
+        setProfileLoader(!profileLoader);
         navigate("/");
+        // }, 0);
       } else {
         toast.error(res?.data?.result?.message);
       }
@@ -87,6 +92,7 @@ const Register = () => {
                 <div className="flex gap-3 items-center">
                   <MdOutlineKey className="text-xl" />
                   <input
+                    maxLength={5}
                     type={passToggle ? "text" : "password"}
                     placeholder="Pin"
                     name="pin"

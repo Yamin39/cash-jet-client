@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Loading from "../components/Loading/Loading";
 import useAuth from "../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  const { pathname } = useLocation();
+  const { currentUser, loading } = useAuth();
 
   if (loading) {
     return (
@@ -14,11 +13,13 @@ const PrivateRoute = ({ children }) => {
       </div>
     );
   }
+  console.log({ currentUser, loading });
 
-  if (user) {
+  if (currentUser || localStorage.getItem("token")) {
     return children;
   }
-  return <Navigate to="/login" state={pathname} replace></Navigate>;
+
+  return <Navigate to="/login"></Navigate>;
 };
 
 PrivateRoute.propTypes = {

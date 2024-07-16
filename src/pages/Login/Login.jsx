@@ -1,11 +1,18 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import { MdEmail, MdOutlineKey } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import image from "../../assets/images/login.avif";
 import logo from "../../assets/images/logo.png";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
+  const { profileLoader, setProfileLoader } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+
   // Password Show / Hide Toggle
   const [passToggle, setPassToggle] = useState(false);
 
@@ -13,9 +20,32 @@ const Login = () => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
-    const password = form.password.value;
-    const loginData = { email, password };
+    const pin = form.pin.value;
+    const loginData = { email, pin };
+
+    // validation
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      toast.error("Invalid email address");
+      return;
+    }
+
     console.log(loginData);
+
+    axiosPublic.post("/login", loginData).then((res) => {
+      console.log(res.data);
+      if (res.data.result?.isLogin) {
+        toast.success("Login Successful");
+        localStorage.setItem("token", res.data.token);
+
+        // setTimeout(() => {
+        form.reset();
+        setProfileLoader(!profileLoader);
+        navigate("/");
+        // }, 0);
+      } else {
+        toast.error(res?.data?.result?.message);
+      }
+    });
   };
   return (
     <div className="py-8 min-h-screen flex flex-row-reverse justify-around items-center">
@@ -39,14 +69,15 @@ const Login = () => {
               <input type="email" placeholder="Email" name="email" className="bg-transparent w-full text-black outline-none" required />
             </div>
 
-            {/* password */}
+            {/* pin */}
             <div className="mt-4 w-full mx-auto flex justify-between items-center gap-3 text-base border-2 text-[#acacac] border-[#c1c8d0] rounded-full py-3 px-6">
               <div className="flex gap-3 items-center">
                 <MdOutlineKey className="text-xl" />
                 <input
                   type={passToggle ? "text" : "password"}
-                  placeholder="Password"
-                  name="password"
+                  placeholder="Pin"
+                  name="pin"
+                  maxLength={5}
                   className="bg-transparent w-full text-black outline-none"
                   required
                 />

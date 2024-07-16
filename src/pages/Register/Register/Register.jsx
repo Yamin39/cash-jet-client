@@ -28,6 +28,11 @@ const Register = () => {
     const userData = { name, pin, mobileNumber, email, balance: 0, status: "pending", role };
 
     // validation
+    if (role === "default") {
+      toast.error("Please choose your account type");
+      return;
+    }
+
     if (isNaN(pin)) {
       toast.error("Only numbers are allowed for pin");
       return;
@@ -48,7 +53,7 @@ const Register = () => {
       return;
     }
 
-    axiosPublic.post("/users", userData).then((res) => {
+    axiosPublic.post("/register", userData).then((res) => {
       console.log(res.data);
       if (res.data.result?.insertedId) {
         toast.success("Registration Successful");

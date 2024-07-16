@@ -12,10 +12,6 @@ const AuthProvider = ({ children }) => {
 
   console.log(location);
 
-  const logIn = (token) => {
-    localStorage.setItem("token", token);
-    setCurrentUser({ token });
-  };
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -23,7 +19,6 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Check if token exists in localStorage
     const token = localStorage.getItem("token");
     if (token) {
       axiosSecure.get("/auth").then((data) => {
@@ -41,7 +36,6 @@ const AuthProvider = ({ children }) => {
     setLoading,
     profileLoader,
     setProfileLoader,
-    logIn,
     logOut,
   };
   return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;

@@ -44,15 +44,16 @@ const RegisterUser = () => {
       return;
     }
 
-    console.log(userData);
+    // console.log(userData);
     axiosPublic.post("/users", userData).then((res) => {
       console.log(res.data);
-      if (res.data.insertedId) {
+      if (res.data.result?.insertedId) {
         toast.success("User Registration Successful");
-        navigate("/");
+        localStorage.setItem("token", res.data.token);
         form.reset();
+        navigate("/");
       } else {
-        toast.error(res?.data?.message);
+        toast.error(res?.data?.result?.message);
       }
     });
   };

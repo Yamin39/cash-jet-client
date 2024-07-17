@@ -28,6 +28,8 @@ const useAxiosSecure = () => {
 
       if (status === 401 || status === 403) {
         authInfo.logOut();
+        // localStorage.removeItem("token");
+        // console.log(authInfo);
       }
 
       return Promise.reject(error);

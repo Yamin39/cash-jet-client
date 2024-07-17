@@ -1,6 +1,8 @@
 import toast, { Toaster } from "react-hot-toast";
 import { CiLogout } from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
+import { GoCheckCircleFill } from "react-icons/go";
+import { PiWarningCircleFill } from "react-icons/pi";
+import { Outlet, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading/Loading";
 import Sidebar from "../components/Sidebar/Sidebar";
 import useAuth from "../hooks/useAuth";
@@ -8,6 +10,10 @@ import useAuth from "../hooks/useAuth";
 const Dashboard = () => {
   const { currentUser, loading, logOut } = useAuth();
   const navigate = useNavigate();
+
+  if (!currentUser) {
+    return <Loading />;
+  }
 
   const handleLogOut = () => {
     navigate("/");
@@ -23,7 +29,21 @@ const Dashboard = () => {
       <div className="w-11/12 md:w-auto md:flex-grow max-w-[1440px] mx-auto mt-7 md:mt-0">
         <div className="hidden md:flex items-center gap-10 pr-10 justify-end">
           <div className="leading-[1.4] py-5">
-            <h5 className="font-semibold text-2xl">{currentUser?.name}</h5>
+            <div className="flex gap-2 items-center">
+              <h5 className="font-semibold text-2xl">{currentUser?.name}</h5>
+
+              {currentUser?.status === "pending" && (
+                <div className="tooltip tooltip-bottom cursor-pointer" data-tip="Pending">
+                  <PiWarningCircleFill className="text-xl text-orange-400" />
+                </div>
+              )}
+
+              {currentUser?.status === "activated" && (
+                <div className="tooltip tooltip-bottom cursor-pointer" data-tip="Activated">
+                  <GoCheckCircleFill className="text-xl text-green-400" />
+                </div>
+              )}
+            </div>
             <p>{currentUser?.email}</p>
           </div>
           <div>
@@ -39,10 +59,7 @@ const Dashboard = () => {
               <Loading></Loading>
             </div>
           ) : (
-            // <Outlet></Outlet>
-            <div className="p-10">
-              <div className="w-full rounded-3xl min-h-96 bg-gray-700"></div>
-            </div>
+            <Outlet></Outlet>
           )}
         </div>
       </div>

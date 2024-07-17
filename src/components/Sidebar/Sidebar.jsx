@@ -19,7 +19,7 @@ const Sidebar = () => {
         <div className="drawer-content p-6 pb-0 flex items-center justify-between md:hidden">
           <div>
             <Link to="/" className="flex items-center gap-3">
-              <img src={logo} className="max-w-[11rem]" />
+              <img src={logo} alt="Cash Jet" className="max-w-[11rem]" />
             </Link>
           </div>
 
@@ -32,7 +32,7 @@ const Sidebar = () => {
           <ul id="sidebar" className="menu bg-white p-4 w-56 min-h-full">
             <div className="mt-2 mb-10">
               <Link to="/" className="flex flex-col items-center gap-3">
-                <img src={logo} className="max-w-[11rem]" />
+                <img src={logo} alt="Cash Jet" className="max-w-[11rem]" />
               </Link>
             </div>
 

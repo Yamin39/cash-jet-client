@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../layout/Dashboard";
 import Root from "../layout/Root";
+import ManageUsers from "../pages/DashboardPages/AdminPages/ManageUsers/ManageUsers";
 import Overview from "../pages/DashboardPages/Overview/Overview";
 import Home from "../pages/Home/Home/Home";
 import Login from "../pages/Login/Login";
@@ -39,8 +40,13 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/dashboard",
+        path: "/dashboard/overview",
         element: <Overview></Overview>,
+      },
+      // admins routes
+      {
+        path: "/dashboard/manage-users",
+        element: <ManageUsers></ManageUsers>,
       },
     ],
   },

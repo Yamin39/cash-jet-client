@@ -46,7 +46,7 @@ const Sidebar = () => {
                 {currentUser?.role === "user" && (
                   <>
                     <li>
-                      <NavLink to="/dashboard">
+                      <NavLink to="/dashboard/overview">
                         <CgProfile className="text-base" />
                         Overview
                       </NavLink>
@@ -88,7 +88,7 @@ const Sidebar = () => {
                 {currentUser?.role === "agent" && (
                   <>
                     <li>
-                      <NavLink to="/dashboard">
+                      <NavLink to="/dashboard/overview">
                         <CgProfile className="text-base" />
                         Overview
                       </NavLink>
@@ -124,7 +124,7 @@ const Sidebar = () => {
                 {currentUser?.role === "admin" && (
                   <>
                     <li>
-                      <NavLink to="/dashboard">
+                      <NavLink to="/dashboard/overview">
                         <CgProfile className="text-base" />
                         Overview
                       </NavLink>

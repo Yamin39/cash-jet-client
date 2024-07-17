@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children, role }) => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl">You don&apos; have permission to access this page</h1>
+      <h1 className="text-2xl">You don&apos;t have permission to access this page</h1>
     </div>
   );
 };

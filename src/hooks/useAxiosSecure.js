@@ -1,12 +1,11 @@
 import axios from "axios";
-import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
   baseURL: "http://localhost:5000",
 });
 
 const useAxiosSecure = () => {
-  const authInfo = useAuth();
+  // const authInfo = useAuth();
 
   axiosSecure.interceptors.request.use(
     (config) => {
@@ -26,11 +25,11 @@ const useAxiosSecure = () => {
     (error) => {
       const status = error?.response?.status;
 
-      if (status === 401 || status === 403) {
-        authInfo.logOut();
-        // localStorage.removeItem("token");
-        // console.log(authInfo);
-      }
+      // if (status === 401 || status === 403) {
+      // authInfo.logOut();
+      // localStorage.removeItem("token");
+      // console.log(authInfo);
+      // }
 
       return Promise.reject(error);
     }

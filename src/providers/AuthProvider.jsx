@@ -12,7 +12,6 @@ const AuthProvider = ({ children }) => {
 
   console.log(location);
 
-
   const logOut = () => {
     localStorage.removeItem("token");
     setCurrentUser(null);

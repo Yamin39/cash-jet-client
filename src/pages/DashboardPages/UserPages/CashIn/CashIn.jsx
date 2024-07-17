@@ -17,9 +17,7 @@ const CashIn = () => {
   if (currentUser?.status !== "activated") {
     return (
       <div className="p-6">
-        <h1 className="text-2xl">
-          Account status &quot;{currentUser?.status}&quot; {currentUser?.role}s are not allowed
-        </h1>
+        <h1 className="text-2xl">Account status &quot;{currentUser?.status}&quot; users are not allowed</h1>
       </div>
     );
   }
@@ -74,7 +72,7 @@ const CashIn = () => {
               </label>
               <div className="mt-3 flex items-center gap-3 text-base border-2 text-[#acacac] border-[#c1c8d0] rounded-full py-3 px-4 pl-6">
                 <MdEmail className="text-xl" />
-                <input id="email" type="email" placeholder="Email" name="email" className="bg-transparent text-black outline-none" required />
+                <input id="email" type="email" placeholder="Email" name="email" className="bg-transparent text-black outline-none w-full" required />
               </div>
             </div>
 
@@ -84,7 +82,7 @@ const CashIn = () => {
               </label>
               <div className="mt-2 flex items-center gap-3 text-base border-2 text-[#acacac] border-[#c1c8d0] rounded-full py-3 px-4 pl-6">
                 <TbCoinTakaFilled className="text-xl" />
-                <input id="amount" type="number" placeholder="Amount" name="amount" className="bg-transparent text-black outline-none" required />
+                <input id="amount" type="number" placeholder="Amount" name="amount" className="bg-transparent text-black outline-none w-full" required />
               </div>
             </div>
 

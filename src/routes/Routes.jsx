@@ -8,6 +8,7 @@ import Home from "../pages/Home/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register/Register";
 import PrivateRoute from "./PrivateRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -48,13 +49,21 @@ const router = createBrowserRouter([
       // user routes
       {
         path: "/dashboard/cash-in",
-        element: <CashIn></CashIn>,
+        element: (
+          <ProtectedRoute role="user">
+            <CashIn></CashIn>
+          </ProtectedRoute>
+        ),
       },
 
       // admins routes
       {
         path: "/dashboard/manage-users",
-        element: <ManageUsers></ManageUsers>,
+        element: (
+          <ProtectedRoute role="admin">
+            <ManageUsers></ManageUsers>
+          </ProtectedRoute>
+        ),
       },
     ],
   },

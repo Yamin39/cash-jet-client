@@ -7,7 +7,7 @@ const Home = () => {
   if (loading) {
     return <Loading></Loading>;
   }
-  return <Navigate to="/dashboard" />;
+  return <Navigate to="/dashboard/overview" />;
 };
 
 export default Home;

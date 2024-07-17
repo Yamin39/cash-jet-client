@@ -29,7 +29,7 @@ const Login = () => {
       return;
     }
 
-    console.log(loginData);
+    // console.log(loginData);
 
     axiosPublic.post("/login", loginData).then((res) => {
       console.log(res.data);

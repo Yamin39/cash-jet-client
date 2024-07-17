@@ -1,6 +1,7 @@
 import toast, { Toaster } from "react-hot-toast";
 import { CiLogout } from "react-icons/ci";
 import { GoCheckCircleFill } from "react-icons/go";
+import { ImBlocked } from "react-icons/im";
 import { PiWarningCircleFill } from "react-icons/pi";
 import { Outlet, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading/Loading";
@@ -41,6 +42,12 @@ const Dashboard = () => {
               {currentUser?.status === "activated" && (
                 <div className="tooltip tooltip-bottom cursor-pointer" data-tip="Activated">
                   <GoCheckCircleFill className="text-xl text-green-400" />
+                </div>
+              )}
+
+              {currentUser?.status === "blocked" && (
+                <div className="tooltip tooltip-bottom cursor-pointer" data-tip="Blocked">
+                  <ImBlocked className="text-xl text-red-400" />
                 </div>
               )}
             </div>

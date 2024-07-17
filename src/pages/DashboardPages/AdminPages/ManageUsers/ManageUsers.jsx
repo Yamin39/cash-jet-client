@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import Swal from "sweetalert2";
+import Loading from "../../../../components/Loading/Loading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
@@ -17,39 +18,36 @@ const ManageUsers = () => {
     },
   });
 
-  //   const handleAccept = (id, email) => {
-  //     axiosSecure.patch(`/accept-agreement/${id}`, { status: "checked" }).then((data) => {
-  //       if (data.data.modifiedCount) {
-  //         axiosSecure.patch(`/users/${email}`, { role: "member" }).then((data) => {
-  //           if (data.data.modifiedCount) {
-  //             Swal.fire({
-  //               title: "Accepted!",
-  //               text: "Agreement accepted successfully.",
-  //               icon: "success",
-  //             });
-  //             refetchAgreements();
-  //           }
-  //         });
-  //       }
-  //     });
-  //   };
+  if (usersLoading) {
+    return <Loading></Loading>;
+  }
 
-  //   const handleReject = (agreement_id, apartmentRoom_id) => {
-  //     axiosSecure.patch(`/rooms/${apartmentRoom_id}`, { availability: true }).then((data) => {
-  //       if (data.data.modifiedCount) {
-  //         axiosSecure.patch(`/reject-agreement/${agreement_id}`, { status: "checked" }).then((data) => {
-  //           if (data.data.modifiedCount) {
-  //             Swal.fire({
-  //               title: "Rejected!",
-  //               text: "Agreement rejected successfully.",
-  //               icon: "success",
-  //             });
-  //             refetchAgreements();
-  //           }
-  //         });
-  //       }
-  //     });
-  //   };
+  const handleActivate = (user) => {
+    axiosSecure.patch(`/users/activate/${user._id}`, { status: "activated", role: user?.role, isNew: user?.isNew, balance: user?.balance }).then((data) => {
+      if (data.data.modifiedCount) {
+        Swal.fire({
+          title: "Activated!",
+          text: "Activated successfully.",
+          icon: "success",
+        });
+        refetchUsers();
+      }
+    });
+  };
+
+  const handleBlock = (user) => {
+    axiosSecure.patch(`/users/block/${user?._id}`, { status: "blocked" }).then((data) => {
+      console.log(data);
+      if (data.data.modifiedCount) {
+        Swal.fire({
+          title: "Blocked!",
+          text: "Blocked successfully.",
+          icon: "success",
+        });
+        refetchUsers();
+      }
+    });
+  };
 
   return (
     <div className="p-10">
@@ -123,10 +121,10 @@ const ManageUsers = () => {
                   Status
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Action
+                  Activate
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Delete
+                  Block
                 </th>
               </tr>
             </thead>
@@ -143,11 +141,21 @@ const ManageUsers = () => {
                     <td className="px-6 py-4">{user?.role}</td>
                     <td className="px-6 py-4">{user?.status}</td>
                     <td className="px-6 py-4">
-                      <button className="btn btn-sm bg-primary-color hover:bg-primary-color hover:brightness-90 text-white font-medium">Activate</button>
+                      <button
+                        onClick={() => handleActivate(user)}
+                        className="btn btn-sm bg-primary-color hover:bg-primary-color hover:brightness-90 text-white font-medium"
+                        disabled={user?.status === "activated"}
+                      >
+                        Activate
+                      </button>
                     </td>
                     <td className="px-6 py-4">
-                      <button className="btn btn-sm btn-error text-white btn-sm-white font-medium">
-                        <RiDeleteBin6Line />
+                      <button
+                        onClick={() => handleBlock(user)}
+                        className="btn btn-sm btn-error text-white btn-sm-white font-medium"
+                        disabled={user?.status === "blocked"}
+                      >
+                        Block
                       </button>
                     </td>
                   </tr>

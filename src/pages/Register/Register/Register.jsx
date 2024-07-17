@@ -25,7 +25,7 @@ const Register = () => {
     const mobileNumber = form.mobileNumber.value;
     const email = form.email.value;
     const role = form.role.value;
-    const userData = { name, pin, mobileNumber, email, balance: 0, status: "pending", role };
+    const userData = { name, pin, mobileNumber, email, balance: 0, status: "pending", role, isNew: true };
 
     // validation
     if (role === "default") {

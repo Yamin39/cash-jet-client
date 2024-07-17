@@ -84,7 +84,7 @@ const Dashboard = () => {
           </div>
         )}
 
-        <div className="bg-[#F1F1F1] min-h-screen rounded-[2.5rem] md:rounded-none md:rounded-tl-[2.5rem]">
+        <div className="bg-[#F1F1F1] min-h-screen rounded-[2.5rem] md:rounded-none md:rounded-tl-[2.5rem] md:rounded-bl-[2.5rem]">
           {loading ? (
             <div className="min-h-screen">
               <Loading></Loading>

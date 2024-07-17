@@ -51,24 +51,28 @@ const Sidebar = () => {
                         Overview
                       </NavLink>
                     </li>
-                    <li>
-                      <NavLink to="/dashboard/send-money">
-                        <TbCreditCardPay className="text-base" />
-                        Send Money
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/dashboard/cash-out">
-                        <BiMoneyWithdraw className="text-base" />
-                        Cash Out
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/dashboard/cash-in">
-                        <TbCreditCardRefund className="text-base" />
-                        Cash In
-                      </NavLink>
-                    </li>
+                    {currentUser?.status === "activated" && (
+                      <>
+                        <li>
+                          <NavLink to="/dashboard/send-money">
+                            <TbCreditCardPay className="text-base" />
+                            Send Money
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/dashboard/cash-out">
+                            <BiMoneyWithdraw className="text-base" />
+                            Cash Out
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/dashboard/cash-in">
+                            <TbCreditCardRefund className="text-base" />
+                            Cash In
+                          </NavLink>
+                        </li>
+                      </>
+                    )}
                     <li>
                       <NavLink to="/dashboard/balance">
                         <TbZoomMoney className="text-base" />
@@ -93,18 +97,22 @@ const Sidebar = () => {
                         Overview
                       </NavLink>
                     </li>
-                    <li>
-                      <NavLink to="/dashboard/cash-in-requests">
-                        <TbCreditCardRefund className="text-base" />
-                        Cash In Requests
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/dashboard/cash-out-requests">
-                        <BiMoneyWithdraw className="text-base" />
-                        Cash Out Requests
-                      </NavLink>
-                    </li>
+                    {currentUser?.status === "activated" && (
+                      <>
+                        <li>
+                          <NavLink to="/dashboard/cash-in-requests">
+                            <TbCreditCardRefund className="text-base" />
+                            Cash In Requests
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/dashboard/cash-out-requests">
+                            <BiMoneyWithdraw className="text-base" />
+                            Cash Out Requests
+                          </NavLink>
+                        </li>
+                      </>
+                    )}
                     <li>
                       <NavLink to="/dashboard/balance">
                         <TbZoomMoney className="text-base" />

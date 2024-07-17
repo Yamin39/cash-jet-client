@@ -121,9 +121,15 @@ const ManageUsers = () => {
               <tbody>
                 {users.map((user) => (
                   <tr key={user?._id} className="odd:bg-white even:bg-gray-50 border-b">
-                    <td className="px-6 py-4">{user?.name}</td>
-                    <td className="px-6 py-4">{user?.email}</td>
-                    <td className="px-6 py-4">{user?.mobileNumber}</td>
+                    <td className="px-6 py-4 md:max-w-[17.8125rem]" style={{ wordBreak: "break-all" }}>
+                      {user?.name}
+                    </td>
+                    <td className="px-6 py-4 md:max-w-[17.8125rem]" style={{ wordBreak: "break-all" }}>
+                      {user?.email}
+                    </td>
+                    <td className="px-6 py-4 md:max-w-[17.8125rem]" style={{ wordBreak: "break-all" }}>
+                      {user?.mobileNumber}
+                    </td>
                     <td className="px-6 py-4">{user?.role}</td>
                     <td className="px-6 py-4">{user?.status}</td>
                     <td className="px-6 py-4">

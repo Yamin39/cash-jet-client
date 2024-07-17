@@ -1,0 +1,11 @@
+#sidebar li a {
+  padding: 0.9375rem 1.1875rem;
+  height: auto;
+  min-height: 0;
+  border-radius: 2.5rem;
+}
+
+#sidebar .active {
+  background-color: #000;
+  color: #fff;
+}

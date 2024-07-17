@@ -61,7 +61,6 @@ const CashIn = () => {
       <div className="flex flex-col md:flex-row gap-7">
         <div className="flex-grow p-6 md:p-10 rounded-3xl bg-white w-full">
           <h3 className="text-3xl font-medium">Send a Cash In request to an Agent</h3>
-
           <form onSubmit={handleSubmit} className="mt-10">
             <div>
               <label htmlFor="email" className="flex items-center gap-3 text-xl font-semibold">
@@ -174,13 +173,13 @@ export default CashIn;
                 <tbody>
                   {cashInRequests.map((cashInRequest) => (
                     <tr key={cashInRequest?._id} className="odd:bg-white even:bg-gray-50 border-b">
-                      <td className="px-6 py-4 md:max-w-[17.8125rem]" style={{ wordBreak: "break-all" }}>
+                      <td className="px-6 py-4 md:max-w-[17.8125rem] word-break-all">
                         {cashInRequest?._id}
                       </td>
-                      <td className="px-6 py-4 md:max-w-[17.8125rem]" style={{ wordBreak: "break-all" }}>
+                      <td className="px-6 py-4 md:max-w-[17.8125rem] word-break-all">
                         {cashInRequest?.agentEmail}
                       </td>
-                      <td className="px-6 py-4 md:max-w-[17.8125rem]" style={{ wordBreak: "break-all" }}>
+                      <td className="px-6 py-4 md:max-w-[17.8125rem] word-break-all">
                         {cashInRequest?.amount}
                       </td>
                       <td className="px-6 py-4">{moment(cashInRequest?.timestamp).format("DD MMMM YYYY")}</td>

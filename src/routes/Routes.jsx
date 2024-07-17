@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../layout/Dashboard";
 import Root from "../layout/Root";
 import ManageUsers from "../pages/DashboardPages/AdminPages/ManageUsers/ManageUsers";
+// import CashInRequests from "../pages/DashboardPages/A";
+import CashInRequests from "../pages/DashboardPages/AgentPages/CashInRequests/CashInRequests";
 import Overview from "../pages/DashboardPages/Overview/Overview";
 import CashIn from "../pages/DashboardPages/UserPages/CashIn/CashIn";
 import Home from "../pages/Home/Home/Home";
@@ -52,6 +54,16 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute role="user">
             <CashIn></CashIn>
+          </ProtectedRoute>
+        ),
+      },
+
+      // agent routes
+      {
+        path: "/dashboard/cash-in-requests",
+        element: (
+          <ProtectedRoute role="agent">
+            <CashInRequests></CashInRequests>
           </ProtectedRoute>
         ),
       },

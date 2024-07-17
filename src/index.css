@@ -22,6 +22,16 @@ body {
   line-height: 2;
 }
 
+.word-break-all {
+  word-break: break-all;
+}
+
+@media (max-width: 768px) {
+  .word-break-all {
+    word-break: normal;
+  }
+}
+
 @media screen and (max-width: 640px) {
   html {
     font-size: 3.5vw;

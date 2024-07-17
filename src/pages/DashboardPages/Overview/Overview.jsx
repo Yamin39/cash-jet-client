@@ -16,21 +16,15 @@ const Overview = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
             <div>
               <h3 className="text-xl font-semibold">Name</h3>
-              <p className="text-gray-500" style={{ wordBreak: "break-all" }}>
-                {capitalizeFirstLetter(name)}
-              </p>
+              <p className="text-gray-500 word-break-all">{capitalizeFirstLetter(name)}</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold">Email Address</h3>
-              <p className="text-gray-500" style={{ wordBreak: "break-all" }}>
-                {email}
-              </p>
+              <p className="text-gray-500 word-break-all">{email}</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold">Mobile Number</h3>
-              <p className="text-gray-500" style={{ wordBreak: "break-all" }}>
-                {mobileNumber}
-              </p>
+              <p className="text-gray-500 word-break-all">{mobileNumber}</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold">Account Type</h3>
@@ -41,9 +35,7 @@ const Overview = () => {
         <div className="flex flex-col sm:flex-row md:flex-col gap-7">
           <div className="bg-black text-white p-6 w-full md:min-w-64 rounded-3xl text-lg">
             <p className="font-medium">Balance</p>
-            <h3 className="text-2xl font-medium" style={{ wordBreak: "break-all" }}>
-              {balance} BDT
-            </h3>
+            <h3 className="text-2xl font-medium word-break-all">{balance} BDT</h3>
           </div>
           {status && (
             <div className="bg-primary-color text-white p-6 w-full md:min-w-64 rounded-3xl text-lg">

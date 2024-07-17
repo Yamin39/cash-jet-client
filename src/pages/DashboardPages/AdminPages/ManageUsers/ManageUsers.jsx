@@ -1,26 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
+import { useRef, useState } from "react";
 import Swal from "sweetalert2";
 import Loading from "../../../../components/Loading/Loading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
+  const [search, setSearch] = useState("");
   const axiosSecure = useAxiosSecure();
+  const searchFormRef = useRef();
 
+  console.log(search);
   const {
     data: users = [],
     isPending: usersLoading,
     refetch: refetchUsers,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", search],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get(`/users?search=${search}`);
       return res.data;
     },
   });
-
-  if (usersLoading) {
-    return <Loading></Loading>;
-  }
 
   const handleActivate = (user) => {
     axiosSecure.patch(`/users/activate/${user._id}`, { status: "activated", role: user?.role, isNew: user?.isNew, balance: user?.balance }).then((data) => {
@@ -49,57 +49,44 @@ const ManageUsers = () => {
     });
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchText = e.target.search_box.value;
+    setSearch(searchText);
+  };
+
   return (
     <div className="p-10">
       <h2 className="mb-9 text-5xl font-medium">Manage Users</h2>
       <div className="p-6 rounded-3xl bg-white">
         <h3 className="text-3xl font-medium mb-6">All Users</h3>
 
-        {/* <div className="overflow-x-auto">
-          <table className="w-full table-xs table-zebra">
-            <thead>
-              <tr className="text-left text-gray-500 text-xs">
-                <th>Name</th>
-                <th>Email</th>
-                <th>Number</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            {!usersLoading && (
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user?._id} className="text-xs">
-                    <td style={{ wordBreak: "break-all" }}>{user?.name}</td>
-                    <td style={{ wordBreak: "break-all" }}>{user?.email}</td>
-                    <td style={{ wordBreak: "break-all" }}>{user?.mobileNumber}</td>
-                    <td style={{ wordBreak: "break-all" }}>{user?.role}</td>
-                    <td style={{ wordBreak: "break-all" }}>{user?.status}</td>
-                    <td className="flex flex-col gap-2">
-                      <button
-                        onClick={() => handleAccept(agreement._id, agreement?.user_email)}
-                        className="btn btn-xs bg-blue-500 text-white hover:bg-blue-500 hover:brightness-90 h-auto min-h-0 text-base rounded-xl py-2"
-                      >
-                        <FaCheck />
-                        Activate
-                      </button>
-
-                      <button
-                        onClick={() => handleReject(agreement._id, agreement?.apartmentRoom_id)}
-                        className="btn btn-xs bg-red-500 text-white hover:bg-red-500 hover:brightness-90 h-auto min-h-0 text-base rounded-xl py-2"
-                      >
-                        <RxCross2 />
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
-        </div> */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <form ref={searchFormRef} onSubmit={handleSearch} className="flex flex-col sm:flex-row items-center gap-4">
+            <label className="input input-bordered flex items-center gap-2 rounded-full w-full sm:w-auto">
+              <input type="text" name="search_box" className="grow" placeholder="Search by name" required />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                <path
+                  fillRule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </label>
+            <button className="btn bg-primary-color hover:bg-primary-color hover:brightness-90 text-white rounded-full w-full sm:w-fit">Search</button>
+          </form>
+          {search && (
+            <button
+              onClick={() => {
+                searchFormRef.current.reset();
+                setSearch("");
+              }}
+              className="btn bg-error hover:bg-error hover:brightness-90 text-white rounded-full w-full sm:w-fit"
+            >
+              Clear
+            </button>
+          )}
+        </div>
 
         <div className="relative overflow-x-auto">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -128,13 +115,12 @@ const ManageUsers = () => {
                 </th>
               </tr>
             </thead>
-            {!usersLoading && (
+            {usersLoading ? (
+              <Loading></Loading>
+            ) : (
               <tbody>
                 {users.map((user) => (
                   <tr key={user?._id} className="odd:bg-white even:bg-gray-50 border-b">
-                    {/* <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                      {user?.name}
-                    </th> */}
                     <td className="px-6 py-4">{user?.name}</td>
                     <td className="px-6 py-4">{user?.email}</td>
                     <td className="px-6 py-4">{user?.mobileNumber}</td>
